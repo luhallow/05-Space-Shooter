@@ -8,9 +8,22 @@ assert sys.version_info >= version, "This script requires at least Python {0}.{1
 logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-SCREEN_TITLE = ""
+SCREEN_WIDTH = 600
+SCREEN_HEIGHT = 800
+SCREEN_TITLE = "The Space Shooter"
+STARTING_LOCATION = (200,100)
+BULLET_DAMAGE = 10
+NUM_ENEMIES = 6
+ENEMY_HP = 100
+HIT_SCORE = 10
+KILL_SCORE = 50
+
+
+class Bullet(arcade.Sprite):
+    def__init__(self, position, velocity, damage)
+        super().__init__("assets/bullet.png", 0.35)
+
+
 
 
 class Window(arcade.Window):

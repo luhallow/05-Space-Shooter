@@ -1,4 +1,4 @@
-import sys, logging, open_color, arcade
+import sys, logging, arcade
 
 #check to make sure we are running the right version of Python
 version = (3,7)
@@ -10,9 +10,7 @@ logger = logging.getLogger(__name__)
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-SCREEN_TITLE = ""
-
-
+SCREEN_TITLE = "Space Shooter Example"
 NUM_ENEMIES = 5
 STARTING_LOCATION = (400,100)
 BULLET_DAMAGE = 10
@@ -44,6 +42,10 @@ class Bullet(arcade.Sprite):
     
 class Player(arcade.Sprite):
     def __init__(self):
+        '''
+        initializes the player sprite
+        parameter: position: (x,y) tuple
+        '''
         super().__init__("Assets- Space/player2.png", 0.5)
         (self.center_x, self.center_y) = STARTING_LOCATION
 
@@ -58,6 +60,27 @@ class Enemy(arcade.Sprite):
         (self.center_x, self.center_y) = position
 
 
+class EnemyBullet(arcade.sprite):
+        def __init__(self, position, velocity, damage):
+            '''
+            initializes the enemy bullet and allows the enemy sprites to shoot
+            damage done
+            Parameter: position: (dx,dy) tuple
+            velocity: (dx,dy) tuple 
+            damage: int (or float)
+            '''
+            
+            super().__init__("assets/bullet_enemy.png", 0.35)
+            (self.center_x, self.center_y) = position
+            (self.dx, self.dy) = velocity 
+            self.damage = damage 
+
+        def update(self):
+            '''
+            moves the enemy bullets
+            '''
+            self.center_x += self.dx
+            self.center_y += self.dy
         
 
 
@@ -69,7 +92,7 @@ class Window(arcade.Window):
         os.chdir(file_path)
 
         self.set_mouse_visible(True)
-        arcade.set_background_color().__init__("Assets- Space/")
+        arcade.set_background_color().__init__("Assets- Space/bg5.png")
         self.bullet_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
         self.player = Player()
@@ -103,7 +126,7 @@ class Window(arcade.Window):
 
     def on_draw(self):
         arcade.start_render()
-        arcade.draw_text(str(self.score), 20, SCREEN_HEIGHT - 40, open_color.white, 16)
+        arcade.draw_text(str(self.score), 20, SCREEN_HEIGHT - 40, 16)
         self.player.draw()
         self.bullet_list.draw()
         self.enemy_list.draw()
@@ -120,3 +143,11 @@ class Window(arcade.Window):
             y = self.player.center_y + 15
             bullet = Bullet((x,y), (o,10), BULLET_DAMAGE)
             self.bullet_list.append(bullet)
+
+    def main():
+       window = Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+       arcade.run()
+
+    if __name__ == "main":
+        main()
+    
